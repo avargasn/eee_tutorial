@@ -1,0 +1,74 @@
+switchport default mode routed
+!
+hostname RR20
+!
+interface Ethernet1
+   no switchport
+   ip address 198.18.50.20/24
+!
+interface Loopback0
+   ip address 198.18.255.20/32
+!
+ip routing
+!
+ip community-list C23 permit 65535:23
+ip community-list C24 permit 65535:24
+!
+route-map C23_IN permit 10
+   set community 65535:23
+!
+route-map C24_IN permit 10
+   set community 65535:24
+!
+route-map SELECTIVE_DOWNLOAD deny 10
+!
+route-map T21_IN permit 10
+   set community 65535:21
+!
+route-map T21_OUT permit 10
+   match community C23
+!
+route-map T22_IN permit 10
+   set community 65535:22
+!
+route-map T22_OUT permit 10
+   match community C24
+!
+router bgp 65535
+   router-id 198.18.255.20
+   no bgp default ipv4-unicast
+   bgp route install-map SELECTIVE_DOWNLOAD
+   neighbor C22 peer group
+   neighbor C22 passive
+   neighbor C23 peer group
+   neighbor C23 remote-as 21
+   neighbor C23 next-hop-unchanged
+   neighbor C23 passive
+   neighbor C23 route-map C23_IN in
+   neighbor C24 peer group
+   neighbor C24 remote-as 24
+   neighbor C24 next-hop-unchanged
+   neighbor C24 route-map C24_IN in
+   neighbor T21 peer group
+   neighbor T21 remote-as 21
+   neighbor T21 next-hop-unchanged
+   neighbor T21 passive
+   neighbor T21 route-map T21_IN in
+   neighbor T21 route-map T21_OUT out
+   neighbor T22 peer group
+   neighbor T22 remote-as 22
+   neighbor T22 next-hop-unchanged
+   neighbor T22 passive
+   neighbor T22 route-map T22_IN in
+   neighbor T22 route-map T22_OUT out
+   neighbor 198.18.50.21 peer group T21
+   neighbor 198.18.50.22 peer group T22
+   neighbor 198.18.50.23 peer group C23
+   neighbor 198.18.50.24 peer group C24
+   !
+   address-family ipv4
+      neighbor C23 activate
+      neighbor C24 activate
+      neighbor T21 activate
+      neighbor T22 activate
+!

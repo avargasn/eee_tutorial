@@ -1,0 +1,25 @@
+vrf instance L3VPN
+!
+interface Ethernet3
+   vrf L3VPN
+   ip address 198.18.1.0/31
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan vrf L3VPN vni 30001
+!
+ip routing vrf L3VPN
+!
+router bgp 65535
+   vrf L3VPN
+      rd 198.18.255.2:30001
+      route-target import evpn 65535:30001
+      route-target export evpn 65535:30001
+      neighbor 198.18.1.1 remote-as 65001
+      neighbor 198.18.1.1 as-path remote-as replace out
+      redistribute connected
+      !
+      address-family ipv4
+         neighbor 198.18.1.1 activate
+      !
+!

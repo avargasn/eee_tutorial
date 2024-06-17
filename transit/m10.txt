@@ -1,0 +1,17 @@
+vlan 50
+!
+interface Ethernet3
+   switchport access vlan 50
+   switchport
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan vlan 50 vni 200050
+!
+router bgp 65535
+   vlan 50
+      rd auto
+      route-target both 65535:200050
+      redistribute learned
+   !
+!

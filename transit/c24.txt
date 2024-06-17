@@ -1,0 +1,19 @@
+switchport default mode routed
+!
+hostname C24
+!
+interface Ethernet1
+   no switchport
+   ip address 198.18.50.24/24
+!
+interface Loopback0
+   ip address 24.24.0.1/16
+!
+ip routing
+!
+router bgp 24
+   router-id 24.24.0.1
+   neighbor 198.18.50.19 remote-as 65535
+   neighbor 198.18.50.20 remote-as 65535
+   network 24.24.0.0/16
+!

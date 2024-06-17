@@ -1,0 +1,20 @@
+platform tfa personality python
+!
+vlan 100
+!
+interface Ethernet3
+   switchport access vlan 100
+   switchport mode dot1q-tunnel
+   switchport
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan vlan 100 vni 200100
+!
+router bgp 65535
+   vlan 100
+      rd auto
+      route-target both 65535:200100
+      redistribute learned
+   !
+!

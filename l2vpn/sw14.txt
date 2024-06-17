@@ -1,0 +1,22 @@
+hostname SW14
+!
+vlan 20
+!
+interface Ethernet1
+   switchport trunk allowed vlan 20
+   switchport mode trunk
+!
+interface Loopback0
+   ip address 10.255.255.14/32
+   ip ospf area 0.0.0.0
+!
+interface Vlan20
+   ip address 10.0.20.14/24
+   ip ospf area 0.0.0.0
+!
+ip routing
+!
+router ospf 1
+   router-id 10.255.255.14
+   passive-interface Loopback0
+!

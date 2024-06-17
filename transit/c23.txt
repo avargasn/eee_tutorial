@@ -1,0 +1,19 @@
+switchport default mode routed
+!
+hostname C23
+!
+interface Ethernet1
+   no switchport
+   ip address 198.18.50.23/24
+!
+interface Loopback0
+   ip address 23.23.0.1/16
+!
+ip routing
+!
+router bgp 23
+   router-id 23.23.0.1
+   neighbor 198.18.50.19 remote-as 65535
+   neighbor 198.18.50.20 remote-as 65535
+   network 23.23.0.0/16
+!
