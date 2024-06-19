@@ -38,10 +38,8 @@ router bgp 65535
    router-id 198.18.255.19
    no bgp default ipv4-unicast
    bgp route install-map SELECTIVE_DOWNLOAD
-   neighbor C22 peer group
-   neighbor C22 passive
    neighbor C23 peer group
-   neighbor C23 remote-as 21
+   neighbor C23 remote-as 23
    neighbor C23 next-hop-unchanged
    neighbor C23 passive
    neighbor C23 route-map C23_IN in
