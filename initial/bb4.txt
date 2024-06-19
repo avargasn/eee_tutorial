@@ -36,6 +36,10 @@ interface Ethernet4
    isis enable ISIS
    isis network point-to-point
 !
+interface Loopback0
+   ip address 198.18.255.4/32
+   isis enable ISIS
+!
 ip routing
 !
 mpls ip
