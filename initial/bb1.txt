@@ -35,6 +35,7 @@ mpls ldp
    no shutdown
 !
 router bgp 65535
+   router-id 198.18.255.1
    no bgp default ipv4-unicast
    neighbor UNDERLAY peer group
    neighbor UNDERLAY remote-as 65535
