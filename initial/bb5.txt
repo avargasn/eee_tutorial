@@ -61,9 +61,6 @@ router bgp 65535
    !
    address-family evpn
       neighbor UNDERLAY activate
-   !
-   address-family rt-membership
-      neighbor UNDERLAY activate
 !
 router isis ISIS
    net 49.0001.0000.0000.0005.00

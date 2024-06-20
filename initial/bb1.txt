@@ -46,8 +46,6 @@ router bgp 65535
    address-family evpn
       neighbor UNDERLAY activate
    !
-   address-family rt-membership
-      neighbor UNDERLAY activate
 !
 router traffic-engineering
    rsvp
